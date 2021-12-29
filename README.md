@@ -8,10 +8,10 @@ A simple one page website to test your typing skills\. It displays your result i
 
 ### Built With
 
--[HTML](https://html.com)
--[Sass](https://sass-lang.com)
--[Typescript](https://www.typesciptlang.org)
--[Nodejs](https://nodejs.org)
+* [HTML](https://html.com)
+* [Sass](https://sass-lang.com)
+* [Typescript](https://www.typesciptlang.org)
+* [Nodejs](https://nodejs.org)
 
 ## Getting Started 
 
