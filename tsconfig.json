@@ -1,0 +1,12 @@
+{
+    "compilerOptions":{
+        "target":"ES2015",
+        "module":"CommonJS",
+        "outDir":"public/scripts"
+    },
+    "include":["files/**/*"],
+    "exclude":["server.ts"],
+    "watchOptions":{
+        "excludeDirectories": ["./node_modules"]
+    }
+}

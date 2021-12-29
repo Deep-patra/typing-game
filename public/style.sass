@@ -1,0 +1,477 @@
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+button 
+    appearance: none
+    border: none
+
+body
+    background-color: #192a56
+    padding: 10px
+    font-family: monospace
+    overflow-y: scroll
+
+    &::-webkit-scrollbar
+        width: 10px 
+        height: 10px 
+        background-color: #192a56
+
+
+    &::-webkit-scrollbar-thumb
+        background-color: #353b48
+        border-radius: 5px
+
+        &:hover
+            background-color: #bdc3c7
+
+
+
+
+
+header
+    display: flex
+    flex-flow: row nowrap
+    justify-content: center
+    font-size: 1em
+
+    h1
+        color: white
+        font-family: monospace
+        text-transform: uppercase
+
+.playerInfo
+    margin: 20px auto
+    display: flex
+    flex-flow: column nowrap
+    align-items: center
+    font-size: 1em
+    color: #feca57
+
+    div
+        display: flex
+        flex-flow: row nowrap
+
+
+
+
+main 
+    max-width: 1000px
+    min-height: 300px
+    margin: 5% auto
+    padding: 10px
+    display: grid
+    grid-gap: 30px
+    grid-template-rows: 1fr
+    grid-template-columns: [line1] 60% [line2] 40% [line3]
+
+
+    #typing_input
+            width: 0px
+            height: 0px
+            background-color: transparent
+            appearence: none
+            outline: none
+            border: none
+
+
+    .typing-container
+        max-width: 100%
+        min-width: 300px
+        min-height: 200px
+        grid-column: line1/line2
+        display: grid
+        grid-gap: 15px
+        grid-template-rows: 40px 210px 200px
+
+        
+        .controls
+            width: 100%
+            height: 40px
+            padding: 5px
+            margin: 5px
+            display: flex
+            flex-flow: row nowrap
+            justify-content: space-between
+
+            .time-container
+                color: #dcdde1
+                font-size: 15px
+                display: flex
+                flex-flow: row nowrap
+                justify-content: space-around
+
+                span
+                    margin: auto
+
+                #countDown 
+                    color: #dcdde1
+                    width: 50px
+                    height: 20px
+                    margin: 5px
+
+                
+
+            
+            button
+                padding: 5px
+                background-color: inherit
+                color: #9c88ff
+                border-radius: 50%
+                cursor: pointer
+
+                &:hover
+                    color: white
+
+                i
+                    color: inherit
+                    margin: 5px
+
+
+        .typing-box-container
+            position: relative
+            width: 100%
+            height: 100%
+            border-radius: 10px
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.5)
+            overflow: hidden
+
+
+            #typing-box
+                max-width: 100%
+                height: 100%
+                display: flex
+                flex-flow: row wrap
+                padding: 10px
+                font-size: 20px
+                color: #8395a7
+
+
+                div 
+                    margin: 5px
+                    display: flex
+                    flex-flow: row wrap
+                    
+                    span
+                        margin: 0px
+                        padding: 0px
+
+                    .correct
+                        color: #44bd32
+
+                    .incorrect
+                        color: #c23616
+
+                    .left-active
+                        border-left: 3px solid #fa8231
+
+                    .right-active
+                        border-right: 3px solid #fa8231
+                    
+                    .extra
+                        opacity: 0.5
+                        color: #c23616
+
+                        
+            .outOfFocus
+                display: flex
+                flex-flow: column wrap
+                width: 100%
+                height: 100%
+                position: absolute
+                top: 0
+                left: 0
+                align-items: center
+                justify-content: center
+                background-color: #192a56
+                cursor: default
+
+                div
+                    color: white
+                    font-size: 1.5em
+                    margin: 10px
+
+
+            .hidden
+                display: none !important
+
+            .timeUpWrapper
+                width: 100%
+                height: 100%
+                position: absolute
+                top: 0
+                left: 0
+                display: flex
+                flex-flow: column nowrap
+                align-items: center
+                justify-content: center
+                background-color: #192a56
+
+                div
+                    color: white
+                    font-size: 1.5em
+
+
+
+
+
+
+
+
+
+        .info
+            box-shadow: 1px 1px 6px rgba(0,0,0,0.5)
+            display: flex
+            flex-flow: column nowrap
+            padding: 10px
+            justify-content: space-around
+            cursor: not-allowed
+            
+
+
+            div
+                font-size: 20px
+                color: #7f8c8d
+
+                &:hover
+                        color: #dff9fb
+
+            .wpm-container
+                width: 100%
+                display: grid
+                grid-template-columns: 10% auto 10%
+                grid-template-rows: 1fr
+                margin: 0px 4px
+                grid-gap: 5px
+
+
+                span
+                    align-self: center
+
+                
+                    .barWrapper
+                        display: block
+                        width: 100%
+                        height: 6px
+                        box-shadow: inset 1px 1px 3px rgba(0,0,0,0.4) 
+                        border-radius: 
+                        padding: 1px
+                        margin: auto 4px 
+
+
+                        #bar
+                            width: 0%
+                            height: 100%
+                            background-color: #8e44ad
+                            border-radius: 5px 
+                            transition: width 0.3s ease-in-out
+
+            #correct-entries
+                color: #2ecc71
+            
+            #incorrect-entries
+                color: #e74c3c
+
+            #total-entries
+                color: #e58e26
+
+            #accuracy
+                color: #82ccdd
+                
+
+
+
+    .settingWrapper
+        grid-columns: line2/line3
+        max-width: 100%
+        min-width: 300px
+        min-height: 400px
+        box-shadow: 1px 1px 6px rgba(0,0,0,0.5)
+        display: grid
+        grid-template-rows: 10% 90%
+        grid-template-columns: 1fr
+        grid-gap: 5px
+        overflow: hidden
+
+        .iconWrapper
+            display: flex
+            flex-flow: row nowrap
+            border-bottom: solid 1px #7f8c8d
+            align-items: center
+            padding: 10px
+            color: #7f8c8d
+
+            #chartsButton
+                color: inherit
+
+            #settingsButton
+                color: inherit
+                
+
+            span
+                margin: 0px 5px
+
+                button
+                    background-color: transparent
+                    font-size: 1em
+                    cursor: pointer
+
+
+                    i
+                        color: inherit
+                        &:hover
+                            color: #c8d6e5
+
+                .active
+                    color: #fc5c65 !important
+
+        .contentWrapper
+            padding: 
+            display: flex
+            flex-flow: column nowrap
+            .hidden
+                display: none !important
+
+
+            .settings
+                display: flex
+                flex-flow: column nowrap
+                padding: 10px
+
+                span
+                    cursor: pointer
+
+                div
+                    margin: 5px 0px
+                    color: #7f8c8d
+                    cursor: default
+                    span
+                        
+                        button
+                            color: #7f8c8d
+                            background-color: transparent
+                            cursor: pointer
+
+                .playerNameWrapper
+                    color: #9b59b6
+                    #setPlayerName
+                        background-color: transparent
+                        border: none
+                        color: #f1c40f
+                        outline: none
+                        padding: 4px 5px
+                        border-radius: 5px
+
+                        &::placeholder
+                            color: #f1c40f
+
+                        &:focus
+                            background-color: white
+                            color: #273c75
+
+                        &:hover
+                            box-shadow: 1px 1px 4px rgba(0,0,0,0.5),inset 1px 1px 2px rgba(0,0,0,0.5)
+
+
+
+                .timeWrapper
+                    span
+                        color:#ee5253
+                    
+                .buttonsWrapper
+
+                    button
+                        &:hover
+                            color: #dff9fb
+
+
+                    .active
+                        color: #ee5253
+
+
+                #refreshContentButton
+                    color: #48dbfb
+
+                    &:hover
+                        color:#ff6b6b
+            
+            .chartWrapper
+                width: 100%
+                height: 100%
+                overflow: hidden
+                display: grid
+                grid-template-columns: 1fr
+                grid-template-rows: 1fr
+                align-items: center
+                justify-content: center
+
+                .chart
+                    width: 100%
+                    height: 100%
+                    position: relative
+                    overflow: hidden
+
+                    .hoverInfo
+                        position: absolute
+                        top: 30%
+                        left: 50%
+                        transform: translate(-50%,-50%)
+                        background-color: #95afc0
+                        border-radius: 10px
+                        padding: 3px 5px
+                        color: #34495e
+                        font-weight: bold
+                        cursor: default
+
+                    .popupWrapper
+                        position: absolute
+                        top: 0
+                        left: 0
+                        min-width: 70px
+                        min-height: 50px
+                        display: flex
+                        flex-flow: column nowrap
+                        padding: 4px
+                        background-color: #353b48
+                        border-radius: 5px
+                        box-shadow: 2px 2px 4px rgba(0,0,0,0.4)
+                        transition: transform 0.05s linear
+                        cursor: default
+
+                        .wpmWrapper
+                            color: #fbc531
+                        .timeWrapper
+                            color: #ffc048
+                        .errorWrapper
+                            color: #f53b57
+
+
+
+                    #typingInfoChart
+
+
+
+
+
+
+
+@media only screen and (max-width:800px)
+    main
+        display: flex
+        flex-flow: column nowrap
+        justify-content: space-around
+        padding: 10px 10%
+
+
+
+
+
+
+
+
+
+
+
+
+

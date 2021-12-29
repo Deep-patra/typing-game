@@ -1,0 +1,5 @@
+const demo:string=`In a far away kingdom, there was a river. This river was home to many golden swans. The swans spent most of their time on the banks of the river. Every six months, the swans would leave a golden feather as a fee for using the lake. The soldiers of the kingdom would collect the feathers and deposit them in the royal treasury.One day, a homeless bird saw the river. “The water in this river seems so cool and soothing. I will make my home here," thought the bird.As soon as the bird settled down near the river, the golden swans noticed her. They came shouting. “This river belongs to us. We pay a golden feather to the King to use this river. You can not live here."
+“I am homeless, brothers. I too will pay the rent. Please give me shelter," the bird pleaded. “How will you pay the rent? You do not have golden feathers," said the swans laughing. They further added, “Stop dreaming and leave once." The humble bird pleaded many times. But the arrogant swans drove the bird away.
+“I will teach them a lesson!" decided the humiliated bird.`;
+
+const wordArray:Array<string>=demo.split(" ");

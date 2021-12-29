@@ -1,0 +1,338 @@
+
+
+
+const typingBox:HTMLElement=document.getElementById("typing-box");
+const playButton:HTMLElement=document.getElementById("play_button");
+const playerIdElem=document.getElementById("playerId");
+const timeUpBanner:HTMLElement=document.querySelector(".timeUpWrapper");
+const popupWrapper=document.getElementById("popUpWrapper");
+
+
+let clock:Clock=new Clock("countDown");
+
+
+//console.log(new TypingBox().words);
+
+
+//function to create a 8-digit random player Id when the page loads
+function loadPlayerId():number{
+    let id:number=Math.floor(Math.random()*10000000);
+    return id;
+}
+
+function getPlayerId():number{
+    if(localStorage.getItem("typingPlayerId")!==null){
+        //console.log(localStorage.getItem("typingPlayerId"));
+        return Number(localStorage.getItem("typingPlayerId"));
+    }
+
+    else{
+        let id:number=loadPlayerId();
+        localStorage.setItem("typingPlayerId",id.toString());
+        return id;
+    }
+
+    return 0;
+}
+
+function getPlayerName():string{
+    if(localStorage.getItem("typingPlayerName")!=="undefined"){
+        return localStorage.getItem("typingPlayerName");
+        
+    }
+
+    return "";
+}
+
+const playerId:number=getPlayerId();
+playerIdElem.textContent=playerId.toString();
+document.getElementById("playerName").textContent=getPlayerName();
+
+//available time periods for the game
+enum TimePeriods{
+    One=60000,
+    two=120000,
+    three=180000
+}
+
+
+//enum for the status of the game 
+enum Status{
+    start="START",
+    reset="RESET"
+}
+
+let runningStatus:Status=Status.start;
+//console.log(runningStatus);
+
+let currentTime:TimePeriods=TimePeriods.One;
+
+let chart:TypingChart=new TypingChart();
+
+
+//Initialize the typing paragraph for the test
+function InitializeText():void{
+
+    const len:number=wordArray.length;
+
+    for(let i=0;i<len;i++){
+
+        //creating a div element to hold the letters
+        const wrapper:HTMLElement=document.createElement("div");
+        wrapper.setAttribute("id",`${i}`);
+        
+
+        for(let j=0;j<wordArray[i].length;j++){
+            const letter:HTMLElement=document.createElement("span");
+
+            //setting attributes of the custom elements
+            letter.setAttribute("class","");
+            letter.textContent+=`${wordArray[i][j]}`;
+            
+
+            //appending the element in the wrapper element
+            wrapper.appendChild(letter);
+        }
+
+        //appending the wrapper in the typing box element
+        typingBox.appendChild(wrapper);
+    }
+    
+}
+
+InitializeText();
+
+
+//function to reset the typingBox
+function resetTypingbox(){
+    let words:HTMLCollection=typingBox.children;
+
+    for(let i=words.length-1;i>=0;i--){
+        words[i].remove();
+    }
+
+    //re-initializing the typing box
+    InitializeText();
+}
+
+
+
+
+//function to the icon and text of the play button
+function changeButton():void{
+    const icon=playButton.firstElementChild;
+    const span=playButton.lastElementChild;
+
+    if(runningStatus===Status.reset){
+        playButton.style.color="#e84118";
+        icon.setAttribute("class","fas fa-stop");
+        span.textContent=Status.reset;
+    }
+
+    else{
+        playButton.style.color="#9c88ff";
+        icon.setAttribute("class","fas fa-play");
+        span.textContent=Status.start;
+
+    }
+}
+
+
+
+//function to call when the timer is finished 
+function finish(){
+
+    endGame();
+
+    //stop the animation in the canvas element by calling the stop render 
+    chart.stopRender();
+
+    //adding the hidden class to the timeup banner
+    timeUpBanner.classList.remove("hidden");
+
+}
+
+
+function start_Game(e:Event):void{
+    
+    //change the running status of the game
+    runningStatus=(runningStatus===Status.start)?Status.reset:Status.start;
+
+    //calling the changeButton to change the visual status of the button
+    changeButton();
+
+    //start the clock if clock is running
+    //restart the clock if the running status is start
+    if(runningStatus!==Status.start){
+        clock.startClock(finish,updateWpm);
+
+        //start the Game and attach the eventlistener
+        startGame();
+
+        //start the chart rendering
+        chart.startRender();
+
+    }
+
+    else{
+        //ending the game
+        endGame();
+        //reseting the info box
+        updateInfo();
+        //reseting the typingBox
+        resetTypingbox();
+        //reseting the clock
+        clock.resetClock();
+        //update the Wpm progress bar 
+        updateWpm(); 
+
+        //reset the graph
+        chart.resetCanvas();
+
+        //scroll the typing box to the top 
+        typingBox.style.overflow="scroll";
+        typingBox.scrollTo({
+            top:0,
+            left:0,
+            behavior: "smooth"
+        });
+        typingBox.style.overflow="hidden";
+
+        //checking if the timeup banner contain the hidden class
+        if(!timeUpBanner.classList.contains("hidden")) timeUpBanner.classList.add("hidden");
+    }
+    
+
+}
+
+//adding the Event listener on the Play button
+playButton.addEventListener("click",start_Game,false);
+
+const typingInput=document.getElementById("typing_input") as HTMLInputElement;
+
+const outOfFocusBox=document.querySelector(".outOfFocus") as HTMLDivElement;
+const typingBoxContainer=document.querySelector(".typing-box-container") as HTMLDivElement;
+
+
+window.addEventListener("click",(e)=>{
+    const path=e.composedPath();
+
+    if(path.includes(typingBoxContainer) || path.includes(playButton)){
+        typingInput.focus();
+        if(!outOfFocusBox.classList.contains("hidden")) outOfFocusBox.classList.add("hidden");
+    }
+
+    else{
+        if(outOfFocusBox.classList.contains("hidden")) outOfFocusBox.classList.remove("hidden");
+    }
+},false);
+
+
+
+const chartWrapper:HTMLDivElement=document.querySelector(".chart") as HTMLDivElement;
+
+//creating a resize observer to observe the canvas element wrapper
+const resizeObserver=new ResizeObserver(entries=>{
+
+    for(let entry of entries){
+
+        if(entry.contentBoxSize && entry.target===chartWrapper){
+            chart.updateDimensions();
+        }
+    }
+
+});
+
+//telling  the observer to observe the chartWrapper element
+resizeObserver.observe(chartWrapper);
+
+
+
+enum  activeButton{
+    chart="charts",
+    setting="settigs"
+};
+
+//set the active status of the button
+let activeStatus:activeButton=activeButton.chart;
+
+const chartsButton=document.getElementById("chartsButton"),
+      settingsButton=document.getElementById("settingsButton");
+
+//function to toggle between the chart and the settings
+
+function changeButtonStyle(e:MouseEvent){
+    if(this==chartsButton){
+        activeStatus=activeButton.chart;
+        if(settingsButton.classList.contains("active")) settingsButton.classList.remove("active");
+        if(!chartsButton.classList.contains("active")) chartsButton.classList.add("active");
+        if(!document.querySelector(".settings").classList.contains('hidden')) document.querySelector(".settings").classList.add("hidden");
+        if(document.querySelector(".chartWrapper").classList.contains("hidden")) document.querySelector(".chartWrapper").classList.remove("hidden");
+    }
+    else{
+        activeStatus=activeButton.setting;
+        if(chartsButton.classList.contains("active")) chartsButton.classList.remove("active");
+        if(!settingsButton.classList.contains("active")) settingsButton.classList.add("active");
+        if(!document.querySelector(".chartWrapper").classList.contains('hidden')) document.querySelector(".chartWrapper").classList.add("hidden");
+        if(document.querySelector(".settings").classList.contains("hidden")) document.querySelector(".settings").classList.remove("hidden");
+    }
+}
+
+chartsButton.addEventListener("click",changeButtonStyle.bind(chartsButton),false);
+settingsButton.addEventListener("click",changeButtonStyle.bind(settingsButton),false);
+
+
+
+let playerInput=document.getElementById("setPlayerName") as HTMLInputElement;
+playerInput.value=getPlayerName();
+
+//change the player Name when the input element is focused
+playerInput.addEventListener("focus",(e:FocusEvent)=>{
+    this.focus();
+    (e.target as HTMLInputElement).setSelectionRange(0,(e.target as HTMLInputElement).value.length);
+},false);
+
+
+//set the player name when the input element is blured
+playerInput.addEventListener("blur",function(e){
+
+    //if the value is empty,set the previous value to the input element
+    if(this.value===""){
+        this.value=getPlayerName();
+        return;
+    }
+
+    localStorage.setItem("typingPlayerName",this.value);
+    document.getElementById("playerName").textContent=this.value;
+}.bind(playerInput),false);
+
+
+
+/***
+ * change the playing time of the typing
+ * 
+ */
+function changeTimeButtonStyle(e){
+    let target=e.target as HTMLButtonElement;
+
+    let child=document.querySelector(".buttonsWrapper").children;
+    for(let i=0;i<child.length;i++){
+        if(child[i].classList.contains("active")) child[i].classList.remove("active");
+    }
+
+    (e.target as HTMLButtonElement).classList.add("active");
+
+    //change the current Time
+    if(target===document.getElementById('1minButton')) currentTime=TimePeriods.One;
+    else if(target===document.getElementById('2minButton')) currentTime=TimePeriods.two;
+    else currentTime=TimePeriods.three;
+
+    //set the time in the clock
+    clock.setTime(currentTime);
+}
+
+//attaching event listener to all three time buttons
+
+document.getElementById("1minButton").addEventListener("click",changeTimeButtonStyle,false);
+document.getElementById("2minButton").addEventListener("click",changeTimeButtonStyle,false);
+document.getElementById("3minButton").addEventListener("click",changeTimeButtonStyle,false);
