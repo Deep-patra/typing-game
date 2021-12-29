@@ -1,0 +1,630 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+button {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border: none;
+}
+
+body {
+  background-color: #192a56;
+  padding: 10px;
+  font-family: monospace;
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #192a56;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #353b48;
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #bdc3c7;
+}
+
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 1em;
+}
+
+header h1 {
+  color: white;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+.playerInfo {
+  margin: 20px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 1em;
+  color: #feca57;
+}
+
+.playerInfo div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+}
+
+main {
+  max-width: 1000px;
+  min-height: 300px;
+  margin: 5% auto;
+  padding: 10px;
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 30px;
+  -ms-grid-rows: 1fr;
+      grid-template-rows: 1fr;
+  -ms-grid-columns: [line1] 60% [line2] 40% [line3];
+      grid-template-columns: [line1] 60% [line2] 40% [line3];
+}
+
+main #typing_input {
+  width: 0px;
+  height: 0px;
+  background-color: transparent;
+  appearence: none;
+  outline: none;
+  border: none;
+}
+
+main .typing-container {
+  max-width: 100%;
+  min-width: 300px;
+  min-height: 200px;
+  grid-column: line1/line2;
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 15px;
+  -ms-grid-rows: 40px 210px 200px;
+      grid-template-rows: 40px 210px 200px;
+}
+
+main .typing-container .controls {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  margin: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+main .typing-container .controls .time-container {
+  color: #dcdde1;
+  font-size: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+main .typing-container .controls .time-container span {
+  margin: auto;
+}
+
+main .typing-container .controls .time-container #countDown {
+  color: #dcdde1;
+  width: 50px;
+  height: 20px;
+  margin: 5px;
+}
+
+main .typing-container .controls button {
+  padding: 5px;
+  background-color: inherit;
+  color: #9c88ff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+main .typing-container .controls button:hover {
+  color: white;
+}
+
+main .typing-container .controls button i {
+  color: inherit;
+  margin: 5px;
+}
+
+main .typing-container .typing-box-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+main .typing-container .typing-box-container #typing-box {
+  max-width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  padding: 10px;
+  font-size: 20px;
+  color: #8395a7;
+}
+
+main .typing-container .typing-box-container #typing-box div {
+  margin: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+main .typing-container .typing-box-container #typing-box div span {
+  margin: 0px;
+  padding: 0px;
+}
+
+main .typing-container .typing-box-container #typing-box div .correct {
+  color: #44bd32;
+}
+
+main .typing-container .typing-box-container #typing-box div .incorrect {
+  color: #c23616;
+}
+
+main .typing-container .typing-box-container #typing-box div .left-active {
+  border-left: 3px solid #fa8231;
+}
+
+main .typing-container .typing-box-container #typing-box div .right-active {
+  border-right: 3px solid #fa8231;
+}
+
+main .typing-container .typing-box-container #typing-box div .extra {
+  opacity: 0.5;
+  color: #c23616;
+}
+
+main .typing-container .typing-box-container .outOfFocus {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #192a56;
+  cursor: default;
+}
+
+main .typing-container .typing-box-container .outOfFocus div {
+  color: white;
+  font-size: 1.5em;
+  margin: 10px;
+}
+
+main .typing-container .typing-box-container .hidden {
+  display: none !important;
+}
+
+main .typing-container .typing-box-container .timeUpWrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #192a56;
+}
+
+main .typing-container .typing-box-container .timeUpWrapper div {
+  color: white;
+  font-size: 1.5em;
+}
+
+main .typing-container .info {
+  -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  padding: 10px;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  cursor: not-allowed;
+}
+
+main .typing-container .info div {
+  font-size: 20px;
+  color: #7f8c8d;
+}
+
+main .typing-container .info div:hover {
+  color: #dff9fb;
+}
+
+main .typing-container .info .wpm-container {
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 10% auto 10%;
+      grid-template-columns: 10% auto 10%;
+  -ms-grid-rows: 1fr;
+      grid-template-rows: 1fr;
+  margin: 0px 4px;
+  grid-gap: 5px;
+}
+
+main .typing-container .info .wpm-container span {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+main .typing-container .info .wpm-container span .barWrapper {
+  display: block;
+  width: 100%;
+  height: 6px;
+  -webkit-box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+          box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+  padding: 1px;
+  margin: auto 4px;
+}
+
+main .typing-container .info .wpm-container span .barWrapper #bar {
+  width: 0%;
+  height: 100%;
+  background-color: #8e44ad;
+  border-radius: 5px;
+  -webkit-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}
+
+main .typing-container .info #correct-entries {
+  color: #2ecc71;
+}
+
+main .typing-container .info #incorrect-entries {
+  color: #e74c3c;
+}
+
+main .typing-container .info #total-entries {
+  color: #e58e26;
+}
+
+main .typing-container .info #accuracy {
+  color: #82ccdd;
+}
+
+main .settingWrapper {
+  grid-columns: line2/line3;
+  max-width: 100%;
+  min-width: 300px;
+  min-height: 400px;
+  -webkit-box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 10% 90%;
+      grid-template-rows: 10% 90%;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  grid-gap: 5px;
+  overflow: hidden;
+}
+
+main .settingWrapper .iconWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  border-bottom: solid 1px #7f8c8d;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  color: #7f8c8d;
+}
+
+main .settingWrapper .iconWrapper #chartsButton {
+  color: inherit;
+}
+
+main .settingWrapper .iconWrapper #settingsButton {
+  color: inherit;
+}
+
+main .settingWrapper .iconWrapper span {
+  margin: 0px 5px;
+}
+
+main .settingWrapper .iconWrapper span button {
+  background-color: transparent;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+main .settingWrapper .iconWrapper span button i {
+  color: inherit;
+}
+
+main .settingWrapper .iconWrapper span button i:hover {
+  color: #c8d6e5;
+}
+
+main .settingWrapper .iconWrapper span .active {
+  color: #fc5c65 !important;
+}
+
+main .settingWrapper .contentWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+}
+
+main .settingWrapper .contentWrapper .hidden {
+  display: none !important;
+}
+
+main .settingWrapper .contentWrapper .settings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  padding: 10px;
+}
+
+main .settingWrapper .contentWrapper .settings span {
+  cursor: pointer;
+}
+
+main .settingWrapper .contentWrapper .settings div {
+  margin: 5px 0px;
+  color: #7f8c8d;
+  cursor: default;
+}
+
+main .settingWrapper .contentWrapper .settings div span button {
+  color: #7f8c8d;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+main .settingWrapper .contentWrapper .settings .playerNameWrapper {
+  color: #9b59b6;
+}
+
+main .settingWrapper .contentWrapper .settings .playerNameWrapper #setPlayerName {
+  background-color: transparent;
+  border: none;
+  color: #f1c40f;
+  outline: none;
+  padding: 4px 5px;
+  border-radius: 5px;
+}
+
+main .settingWrapper .contentWrapper .settings .playerNameWrapper #setPlayerName::-webkit-input-placeholder {
+  color: #f1c40f;
+}
+
+main .settingWrapper .contentWrapper .settings .playerNameWrapper #setPlayerName:-ms-input-placeholder {
+  color: #f1c40f;
+}
+
+main .settingWrapper .contentWrapper .settings .playerNameWrapper #setPlayerName::-ms-input-placeholder {
+  color: #f1c40f;
+}
+
+main .settingWrapper .contentWrapper .settings .playerNameWrapper #setPlayerName::placeholder {
+  color: #f1c40f;
+}
+
+main .settingWrapper .contentWrapper .settings .playerNameWrapper #setPlayerName:focus {
+  background-color: white;
+  color: #273c75;
+}
+
+main .settingWrapper .contentWrapper .settings .playerNameWrapper #setPlayerName:hover {
+  -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5), inset 1px 1px 2px rgba(0, 0, 0, 0.5);
+          box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5), inset 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+main .settingWrapper .contentWrapper .settings .timeWrapper span {
+  color: #ee5253;
+}
+
+main .settingWrapper .contentWrapper .settings .buttonsWrapper button:hover {
+  color: #dff9fb;
+}
+
+main .settingWrapper .contentWrapper .settings .buttonsWrapper .active {
+  color: #ee5253;
+}
+
+main .settingWrapper .contentWrapper .settings #refreshContentButton {
+  color: #48dbfb;
+}
+
+main .settingWrapper .contentWrapper .settings #refreshContentButton:hover {
+  color: #ff6b6b;
+}
+
+main .settingWrapper .contentWrapper .chartWrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: 1fr;
+      grid-template-rows: 1fr;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main .settingWrapper .contentWrapper .chartWrapper .chart {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+main .settingWrapper .contentWrapper .chartWrapper .chart .hoverInfo {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: #95afc0;
+  border-radius: 10px;
+  padding: 3px 5px;
+  color: #34495e;
+  font-weight: bold;
+  cursor: default;
+}
+
+main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 70px;
+  min-height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column nowrap;
+          flex-flow: column nowrap;
+  padding: 4px;
+  background-color: #353b48;
+  border-radius: 5px;
+  -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  -webkit-transition: -webkit-transform 0.05s linear;
+  transition: -webkit-transform 0.05s linear;
+  transition: transform 0.05s linear;
+  transition: transform 0.05s linear, -webkit-transform 0.05s linear;
+  cursor: default;
+}
+
+main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper .wpmWrapper {
+  color: #fbc531;
+}
+
+main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper .timeWrapper {
+  color: #ffc048;
+}
+
+main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper .errorWrapper {
+  color: #f53b57;
+}
+
+@media only screen and (max-width: 800px) {
+  main {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    padding: 10px 10%;
+  }
+}
+/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!--Logo and other things on the header-->
+        <script src="scripts/clock.js" type="text/javascript" async></script> 
+        <script src="scripts/words.js" type="text/javascript" async></script>
+        <header>
+            <h1>typing <i class="fas fa-keyboard"></i> challenge</h1>
+        </header>
+
+        <div class="playerInfo">
+            <div class="playerNameWrapper" title="Player Name ">
+                <h2>Player Name:</h2>
+                <h2 id="playerName"></h2>
+            </div>
+    
+            <div class="playerId-container" title="Id of the player">
+                <h2>Player Id:</h2>
+                <h2 id="playerId"></h2>
+            </div>
+        </div>
+
+        <main id="typing-frame">
+            <input id="typing_input" type="text" autofocus autocomplete="off"/>
+            <div class="typing-container">
+                <div class="controls">
+                    <div class="time-container" title="stopwatch">
+                        <span>TIME </span>
+                        <span id="countDown"></span>
+                    </div>
+                    <button id="play_button" title="start and reset button"><i class="fas fa-play"></i><span id="running_status">START</span></button>
+                </div>
+
+                
+    
+                <div class="typing-box-container">
+                    <div id="typing-box"></div>
+                    <div class="outOfFocus hidden">
+                        <div><p>Out of Focus,click in the Box</p></div>
+                        <div><i class="fas fa-mouse-pointer"></i></div>
+                    </div>
+                    <div class="timeUpWrapper hidden">
+                        <div><p>Time's UP! <i class="fas fa-stopwatch"></i></p></div>
+                    </div>
+                    
+                </div>
+                <div class="info">
+                    <div class="wpm-container" title="Words typed per minute">
+                        <span>WPM</span>
+                        <span>
+                            <span id="bar-container" class="barWrapper">
+                                <div id="bar"></div>
+                            </span>
+                        </span>
+                        <span id="wpmCounter">
+                            0
+                        </span>
+                    </div>
+
+                    <div title="Number of correct words typed">
+                        <span>Correct Entries:</span>
+                        <span id="correct-entries">0</span>
+                    </div>
+                    <div title="Number of incorrect words typed">
+                        <span>Incorrect Entries:</span>
+                        <span id="incorrect-entries">0</span>
+                    </div>
+                    <!--Total words typed-->
+                    <div title="Total number of words typed">
+                        <span>Total Entries:</span>
+                        <span id="total-entries">0</span>
+                    </div>
+                    <div title="Accuracy of the words typed">
+                        <span>Accuracy:</span>
+                        <span id="accuracy">0%</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="settingWrapper">
+                <div class="iconWrapper">
+                    <span>
+                        <button id="chartsButton" class="active" title="Graphical representation of your typing Input"><i class="fas fa-chart-line"></i></button>
+                    </span>
+                    <span>
+                        <button id="settingsButton" class="" title="settings"><i class="fas fa-cogs"></i></button>
+                    </span>
+                </div>
+
+                <div class="contentWrapper">
+                    <div class="settings hidden">
+                        <div class="timeWrapper">
+                            <span>Time</span>
+                            <span class="buttonsWrapper">
+                                <button id="1minButton" class="active">60s</button>
+                                <button id="2minButton">120s</button>
+                                <button id="3minButton">180s</button>
+                            </span>
+                        </div>
+                        <div class="playerNameWrapper">
+                            <span>PlayerName</span>
+                            <span>
+                                <input id="setPlayerName" type="text" placeholder="click here..." title="change the player name">
+                            </span>
+                        </div>
+                        <div>
+                            <span>
+                                <button id="refreshContentButton">
+                                    REFRESH the paragraph of the box <i class="fa fa-refresh" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chartWrapper">
+                        <div class="chart">
+                            <div class="hoverInfo"><p>Hover over!</p></div>
+                            <div id="popUpWrapper" class="popupWrapper">
+                                <span class="wpmWrapper"><span>WPM:</span><span id="wpmValue">0</span></span>
+                                <span class="timeWrapper"><span>TIME:</span><span id="timeValue">0s</span></span>
+                                <span class="errorWrapper"><span>ERROR:</span><span id="errorValue">0</span></span>
+                            </div>
+                            <canvas id="typingInfoChart">
+                                canvas is not supported in your Browser
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+        </main>
+        <script type="text/javascript" src="scripts/typingBox.js" async></script> 
+        <script type="text/javascript" src="scripts/chart.js" async></script>
+        <script type="text/javascript" src="scripts/main.js" async defer></script>
+        
+        
+    </body>
+</html>
