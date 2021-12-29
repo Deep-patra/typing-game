@@ -1,12 +1,8 @@
 # Typing  Challenge
 
-____
-
 A simple wepage to test your typing skills.
 
 ## Description
-
-***
 
 A simple one page website to test your typing skills\. It displays your result in graphical representation.
 
@@ -18,8 +14,6 @@ A simple one page website to test your typing skills\. It displays your result i
 -[Nodejs](https://nodejs.org)
 
 ## Getting Started 
-
-***
 
 To run the application,your system needs to have typescript and sass installed.
 
@@ -35,8 +29,6 @@ npm install sass -g
 ```
 
 ### Installation
-
-***
 
 To install this application, First clone this repository by running this command.
 
@@ -60,13 +52,9 @@ Now this application will be running in your browser at port 3000.Go to http://l
 
 ## Contributing
 
-***
-
 Pull requests are welcome.For major changes please open a n issue first to discuss what would you like to change.
 
 ## License
-
-***
 
 This project is licensed under [MIT](https://choosealicense.com/license/mit) license.
 For more information,read the LICENSE file in the project directory.
