@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto+Mono:wght@100&display=swap')
+    
 *
     margin: 0
     padding: 0
@@ -78,7 +80,7 @@ main
 
     .typing-container
         max-width: 100%
-        min-width: 300px
+        min-width: 200px
         min-height: 200px
         grid-column: line1/line2
         display: grid
@@ -240,10 +242,13 @@ main
             .wpm-container
                 width: 100%
                 display: grid
-                grid-template-columns: 10% auto 10%
+                grid-template-columns: 15% 70% 15%
                 grid-template-rows: 1fr
-                margin: 0px 4px
                 grid-gap: 5px
+
+                #wpmCounter
+                    margin: 0px auto
+
 
 
                 span
@@ -252,10 +257,10 @@ main
                 
                     .barWrapper
                         display: block
-                        width: 100%
+                        min-width: 100%
                         height: 6px
                         box-shadow: inset 1px 1px 3px rgba(0,0,0,0.4) 
-                        border-radius: 
+                        border-radius: 4px
                         padding: 1px
                         margin: auto 4px 
 
@@ -285,7 +290,7 @@ main
     .settingWrapper
         grid-columns: line2/line3
         max-width: 100%
-        min-width: 300px
+        min-width: 200px
         min-height: 400px
         box-shadow: 1px 1px 6px rgba(0,0,0,0.5)
         display: grid
@@ -477,16 +482,48 @@ main
 @media only screen and (max-width: 800px)
 
     body
+        font-size: 10px
         padding: 0px
 
 
+
     main
-        max-width: 600px
+        max-width: 500px
         margin: 0px auto
         display: flex
         flex-flow: column nowrap
         justify-content: space-around
-        padding: 10px 5px
+        padding: 10px 20px
+        font-size: 12px
+
+        .typing-container
+
+            .controls
+                font-size: 12px
+                .time-container
+                    font-size: 15px
+                button
+                    font-size: 12px
+
+            .typing-box-container
+                font-size: 15px
+                #typing-box
+                    div
+                        span
+                            font-size: 15px
+
+
+
+
+            .info
+                div
+                    font-size: 15px
+                    
+
+                
+
+
+
 
 
     .settingWrapper
@@ -503,6 +540,9 @@ main
                         &::-webkit-scrollbar-thumb
                             width: 0px
                             height: 0px
+.footer
+    font-size: 10px
+    font-family: 'Roboto Mono', monospace
 
 
 
