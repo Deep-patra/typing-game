@@ -447,22 +447,49 @@ main
                             color: #f53b57
 
 
+.footer
+    width: 100%
+    min-height: 100px
+    color: white
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: #2f3640
+    margin-top: 20px
 
-                    #typingInfoChart
+
+    div
+        p
+            line-height: 15px
+            a
+                color: white
+
+                &:hover
+                    color: #9b59b6
 
 
 
 
 
 
+@media only screen and (max-width: 800px)
 
-@media only screen and (max-width:800px)
+    body
+        padding: 0px
+
     main
         display: flex
         flex-flow: column nowrap
         justify-content: space-around
-        padding: 10px 10%
+        padding: 10px 5px
 
+
+    .settingWrapper
+        .contentWrapper
+            .chartWrapper
+                .chart
+                    overflow: auto !important
+                    overscroll-behavior-y: contain
 
 
 

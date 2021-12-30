@@ -613,7 +613,39 @@ main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper .errorWr
   color: #f53b57;
 }
 
+.footer {
+  width: 100%;
+  min-height: 100px;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #2f3640;
+  margin-top: 20px;
+}
+
+.footer div p {
+  line-height: 15px;
+}
+
+.footer div p a {
+  color: white;
+}
+
+.footer div p a:hover {
+  color: #9b59b6;
+}
+
 @media only screen and (max-width: 800px) {
+  body {
+    padding: 0px;
+  }
   main {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -624,7 +656,11 @@ main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper .errorWr
             flex-flow: column nowrap;
     -ms-flex-pack: distribute;
         justify-content: space-around;
-    padding: 10px 10%;
+    padding: 10px 5px;
+  }
+  .settingWrapper .contentWrapper .chartWrapper .chart {
+    overflow: auto !important;
+    overscroll-behavior-y: contain;
   }
 }
 /*# sourceMappingURL=style.css.map */

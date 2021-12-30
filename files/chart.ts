@@ -67,6 +67,27 @@ class TypingChart{
 
     },false);
 
+        const  wrapper:DOMRect=document.querySelector(".chart").getBoundingClientRect();
+
+        this.canvasElem.addEventListener("touchmove",(e:TouchEvent)=>{
+
+            let [x,y]=[e.touches[0].pageX,e.touches[0].pageY];
+
+            [x,y]=[Math.abs(x-wrapper.left),Math.abs(y-wrapper.top)];
+
+           //fixed to second decimal place
+           [x,y]=[parseInt(x.toFixed(2)),parseInt(y.toFixed(2))];
+           //console.log(x,y);
+
+           popupWrapper.style.transform=`translate(${x}px,${y}px)`;
+
+           if(!hoverInfo.classList.contains("hidden")){
+               hoverInfo.classList.add("hidden");
+           }
+
+           this.refreshContent(x,y);
+        },false);
+
         document.querySelector(".chartWrapper").addEventListener("mouseleave",(e:MouseEvent)=>{
             popupWrapper.style.transform=`translate(0px,0px)`;
 
@@ -77,10 +98,23 @@ class TypingChart{
             this.resetContent();
         });
 
+        //reseting the position of the draggable to its initial position 
+        this.canvasElem.addEventListener("touchend",(e:TouchEvent)=>{
+            popupWrapper.style.transform=`translate(0px,0px)`;
+
+            if(hoverInfo.classList.contains("hidden")){
+                hoverInfo.classList.remove("hidden");
+            }
+
+            this.resetContent();
+        },false);
+
 
         //draw the default content on the canvas 
         this.drawDefault();
     }
+
+    
     //reset the content of the popup on mouseleave
     private resetContent(){
         wpmValue.textContent="0";

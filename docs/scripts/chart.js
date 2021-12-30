@@ -31,6 +31,19 @@ class TypingChart {
             }
             this.refreshContent(e.offsetX, e.offsetY);
         }, false);
+        const wrapper = document.querySelector(".chart").getBoundingClientRect();
+        this.canvasElem.addEventListener("touchmove", (e) => {
+            let [x, y] = [e.touches[0].pageX, e.touches[0].pageY];
+            [x, y] = [Math.abs(x - wrapper.left), Math.abs(y - wrapper.top)];
+            //fixed to second decimal place
+            [x, y] = [parseInt(x.toFixed(2)), parseInt(y.toFixed(2))];
+            //console.log(x,y);
+            popupWrapper.style.transform = `translate(${x}px,${y}px)`;
+            if (!hoverInfo.classList.contains("hidden")) {
+                hoverInfo.classList.add("hidden");
+            }
+            this.refreshContent(x, y);
+        }, false);
         document.querySelector(".chartWrapper").addEventListener("mouseleave", (e) => {
             popupWrapper.style.transform = `translate(0px,0px)`;
             if (hoverInfo.classList.contains("hidden")) {
@@ -39,6 +52,14 @@ class TypingChart {
             //reset the values in the hovering object
             this.resetContent();
         });
+        //reseting the position of the draggable to its initial position 
+        this.canvasElem.addEventListener("touchend", (e) => {
+            popupWrapper.style.transform = `translate(0px,0px)`;
+            if (hoverInfo.classList.contains("hidden")) {
+                hoverInfo.classList.remove("hidden");
+            }
+            this.resetContent();
+        }, false);
         //draw the default content on the canvas 
         this.drawDefault();
     }
