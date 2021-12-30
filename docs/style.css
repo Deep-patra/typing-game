@@ -585,6 +585,7 @@ main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  z-index: 10;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-flow: column nowrap;
@@ -628,6 +629,7 @@ main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper .errorWr
           align-items: center;
   background-color: #2f3640;
   margin-top: 20px;
+  padding: 10px;
 }
 
 .footer div p {
@@ -647,6 +649,8 @@ main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper .errorWr
     padding: 0px;
   }
   main {
+    max-width: 600px;
+    margin: 0px auto;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -658,9 +662,17 @@ main .settingWrapper .contentWrapper .chartWrapper .chart .popupWrapper .errorWr
         justify-content: space-around;
     padding: 10px 5px;
   }
-  .settingWrapper .contentWrapper .chartWrapper .chart {
-    overflow: auto !important;
-    overscroll-behavior-y: contain;
+  .settingWrapper .contentWrapper .chartWrapper .chart canvas {
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .settingWrapper .contentWrapper .chartWrapper .chart canvas::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  .settingWrapper .contentWrapper .chartWrapper .chart canvas::-webkit-scrollbar-thumb {
+    width: 0px;
+    height: 0px;
   }
 }
 /*# sourceMappingURL=style.css.map */
