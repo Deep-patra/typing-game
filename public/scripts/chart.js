@@ -1,10 +1,11 @@
-const wpmValue = document.getElementById("wpmValue"), timeValue = document.getElementById("timeValue"), errorValue = document.getElementById("errorValue");
+var wpmValue = document.getElementById("wpmValue"), timeValue = document.getElementById("timeValue"), errorValue = document.getElementById("errorValue");
 /**
  * @class TypingChart
  * @description class to make changes to the canvas element according to the typing input
  */
-class TypingChart {
-    constructor() {
+var TypingChart = /** @class */ (function () {
+    function TypingChart() {
+        var _this = this;
         this.canvasElem = document.getElementById("typingInfoChart");
         this.ctx = this.canvasElem.getContext("2d");
         this.width = 0;
@@ -22,97 +23,101 @@ class TypingChart {
         this.plotPoints();
         this.drawDotLines();
         //adding the eventListener to the canvas element
-        let hoverInfo = document.querySelector(".hoverInfo");
-        this.canvasElem.addEventListener("mousemove", (e) => {
-            const [x, y] = [e.offsetX, e.offsetY];
-            popupWrapper.style.transform = `translate(${x}px,${y}px)`;
+        var hoverInfo = document.querySelector(".hoverInfo");
+        this.canvasElem.addEventListener("mousemove", function (e) {
+            var _a = [e.offsetX, e.offsetY], x = _a[0], y = _a[1];
+            popupWrapper.style.transform = "translate(" + x + "px," + y + "px)";
             if (!hoverInfo.classList.contains("hidden")) {
                 hoverInfo.classList.add("hidden");
             }
-            this.refreshContent(e.offsetX, e.offsetY);
+            _this.refreshContent(e.offsetX, e.offsetY);
         }, false);
-        const wrapper = document.querySelector(".chart").getBoundingClientRect();
-        this.canvasElem.addEventListener("touchmove", (e) => {
-            let [x, y] = [e.touches[0].pageX, e.touches[0].pageY];
-            [x, y] = [Math.abs(x - wrapper.left), Math.abs(y - wrapper.top)];
+        var wrapper = document.querySelector(".chart").getBoundingClientRect();
+        this.canvasElem.addEventListener("touchmove", function (e) {
+            var _a, _b;
+            var _c = [e.touches[0].pageX, e.touches[0].pageY], x = _c[0], y = _c[1];
+            _a = [Math.abs(x - wrapper.left), Math.abs(y - wrapper.top)], x = _a[0], y = _a[1];
             //fixed to second decimal place
-            [x, y] = [parseInt(x.toFixed(2)), parseInt(y.toFixed(2))];
+            _b = [parseInt(x.toFixed(2)), parseInt(y.toFixed(2))], x = _b[0], y = _b[1];
             //console.log(x,y);
-            popupWrapper.style.transform = `translate(${x}px,${y}px)`;
+            popupWrapper.style.transform = "translate(" + x + "px," + y + "px)";
             if (!hoverInfo.classList.contains("hidden")) {
                 hoverInfo.classList.add("hidden");
             }
-            this.refreshContent(x, y);
+            _this.refreshContent(x, y);
         }, false);
-        document.querySelector(".chartWrapper").addEventListener("mouseleave", (e) => {
-            popupWrapper.style.transform = `translate(0px,0px)`;
+        document.querySelector(".chartWrapper").addEventListener("mouseleave", function (e) {
+            popupWrapper.style.transform = "translate(0px,0px)";
             if (hoverInfo.classList.contains("hidden")) {
                 hoverInfo.classList.remove("hidden");
             }
             //reset the values in the hovering object
-            this.resetContent();
+            _this.resetContent();
         });
         //reseting the position of the draggable to its initial position 
-        this.canvasElem.addEventListener("touchend", (e) => {
-            popupWrapper.style.transform = `translate(0px,0px)`;
+        this.canvasElem.addEventListener("touchend", function (e) {
+            popupWrapper.style.transform = "translate(0px,0px)";
             if (hoverInfo.classList.contains("hidden")) {
                 hoverInfo.classList.remove("hidden");
             }
-            this.resetContent();
+            _this.resetContent();
         }, false);
         //draw the default content on the canvas 
         this.drawDefault();
     }
     //reset the content of the popup on mouseleave
-    resetContent() {
+    TypingChart.prototype.resetContent = function () {
         wpmValue.textContent = "0";
         timeValue.textContent = "0s";
         errorValue.textContent = "0";
-    }
-    refreshContent(x, y) {
-        let diff = 1000, index = 0;
-        for (let i = 0; i < this.points.length; i++) {
-            let tmp = Math.abs(this.points[i].x - x);
+    };
+    TypingChart.prototype.refreshContent = function (x, y) {
+        var diff = 1000, index = 0;
+        for (var i = 0; i < this.points.length; i++) {
+            var tmp = Math.abs(this.points[i].x - x);
             if (tmp < diff) {
                 diff = tmp;
                 index = i;
             }
         }
-        let data = this.wpmData[index] || { wpm: 0, time: 0, error: 0 };
-        wpmValue.textContent = `${data.wpm}`;
-        timeValue.textContent = `${data.time / 1000}s`;
-        errorValue.textContent = `${data.error}`;
-    }
-    drawDefault() {
+        var data = this.wpmData[index] || { wpm: 0, time: 0, error: 0 };
+        wpmValue.textContent = "" + data.wpm;
+        timeValue.textContent = data.time / 1000 + "s";
+        errorValue.textContent = "" + data.error;
+    };
+    TypingChart.prototype.drawDefault = function () {
         this.ctx.clearRect(0, 0, this.canvasElem.width, this.canvasElem.height);
         this.createAxis();
         this.labelAxis();
         this.drawDotLines();
-    }
+    };
     //public method to add wpm,time and error to the wpmData array
-    addWpmData(wpm = 0, time = 0, error = 0) {
+    TypingChart.prototype.addWpmData = function (wpm, time, error) {
+        if (wpm === void 0) { wpm = 0; }
+        if (time === void 0) { time = 0; }
+        if (error === void 0) { error = 0; }
         this.wpmData.push({ wpm: wpm, time: time, error: error });
         //adding the points when new data is received
         this.addPoints({ wpm: wpm, time: time, error: error });
         //adding the error points when new data is recieved
         this.addErrorPoints({ wpm: wpm, time: time, error: error });
-    }
+    };
     //private method to add points to the "points" array
-    addPoints(data) {
+    TypingChart.prototype.addPoints = function (data) {
         this.points.push({ x: this.getTimeCoords(data.time), y: this.getWpmCoords(data.wpm) });
-    }
+    };
     //private method to add error point to errorPoints array
-    addErrorPoints(data) {
+    TypingChart.prototype.addErrorPoints = function (data) {
         this.errorPoints.push({ x: this.getTimeCoords(data.time), y: this.getErrorCoords(data.error) });
-    }
-    updateDimensions() {
+    };
+    TypingChart.prototype.updateDimensions = function () {
         //slice(0,-2) to get rid of "px"
-        let canvasWrapper = document.querySelector(".chart");
-        let width = Number(getComputedStyle(canvasWrapper).getPropertyValue("width").slice(0, -2));
-        let height = Number(getComputedStyle(canvasWrapper).getPropertyValue("height").slice(0, -2));
+        var canvasWrapper = document.querySelector(".chart");
+        var width = Number(getComputedStyle(canvasWrapper).getPropertyValue("width").slice(0, -2));
+        var height = Number(getComputedStyle(canvasWrapper).getPropertyValue("height").slice(0, -2));
         //console.log(width,height,this.canvasElem.width,this.canvasElem.height);
-        this.canvasElem.setAttribute("width", `${width}`);
-        this.canvasElem.setAttribute("height", `${height}`);
+        this.canvasElem.setAttribute("width", "" + width);
+        this.canvasElem.setAttribute("height", "" + height);
         this.width = this.canvasElem.width;
         this.height = this.canvasElem.height;
         this.canvasLength = this.height - 20;
@@ -120,7 +125,7 @@ class TypingChart {
         this.drawDefault();
         this.points = []; //removing all the prevoius data
         this.errorPoints = [];
-        for (let i = 0; i < this.wpmData.length; i++) {
+        for (var i = 0; i < this.wpmData.length; i++) {
             this.addPoints(this.wpmData[i]); //inserting new data 
             this.addErrorPoints(this.wpmData[i]);
         }
@@ -128,14 +133,14 @@ class TypingChart {
             this.startRender();
         }
         //console.log("dimensions of the canvas",this.canvasElem.width,this.canvasElem.height);
-    }
+    };
     //label the absica(x-coordinate)
-    labelAxis() {
+    TypingChart.prototype.labelAxis = function () {
         this.ctx.save();
         this.ctx.font = "15px monospace";
         this.ctx.fillStyle = "#4cd137";
         //get the width of the text "words per minute"
-        let width = this.ctx.measureText("words per minute").width;
+        var width = this.ctx.measureText("words per minute").width;
         this.ctx.translate(15, this.height - width / 2);
         this.ctx.rotate(-(Math.PI / 180) * 90);
         this.ctx.fillText("Words per minute", 0, 0);
@@ -156,9 +161,9 @@ class TypingChart {
         this.ctx.rotate((Math.PI / 180) * 90);
         this.ctx.fillText("Error", 0, 0);
         this.ctx.restore();
-    }
+    };
     //function to create the graph
-    createAxis() {
+    TypingChart.prototype.createAxis = function () {
         this.ctx.save();
         //drawing the x-axis on the canvas
         this.ctx.strokeStyle = "#4834d4";
@@ -173,25 +178,25 @@ class TypingChart {
         this.ctx.closePath();
         this.ctx.stroke();
         this.ctx.restore();
-    }
-    getWpmCoords(wpm) {
+    };
+    TypingChart.prototype.getWpmCoords = function (wpm) {
         return this.canvasLength - ((wpm / 100) * this.canvasLength);
-    }
-    getTimeCoords(time) {
+    };
+    TypingChart.prototype.getTimeCoords = function (time) {
         return ((time / currentTime) * this.canvasBreadth) + 20;
-    }
-    getErrorCoords(error) {
+    };
+    TypingChart.prototype.getErrorCoords = function (error) {
         return this.canvasLength - (error / 20) * this.canvasLength;
-    }
+    };
     //private method to draw the dotted lines in the graph
-    drawDotLines() {
+    TypingChart.prototype.drawDotLines = function () {
         this.ctx.save();
         this.ctx.strokeStyle = "white";
         //looping to draw the dotted lines parallel to the x-axis
-        for (let i = 5000; i < 60000; i += 5000) {
+        for (var i = 5000; i < 60000; i += 5000) {
             this.ctx.lineWidth = 0.3;
             this.ctx.setLineDash([2, 10]);
-            let xCoord = this.getTimeCoords(i);
+            var xCoord = this.getTimeCoords(i);
             this.ctx.beginPath();
             this.ctx.moveTo(xCoord + 0.5, this.height - 20);
             this.ctx.lineTo(xCoord + 0.5, 0);
@@ -199,30 +204,30 @@ class TypingChart {
             this.ctx.stroke();
         }
         this.ctx.restore();
-    }
+    };
     //draw the points in the graph
-    plotPoints() {
-        const len = this.points.length;
+    TypingChart.prototype.plotPoints = function () {
+        var len = this.points.length;
         this.ctx.save();
         this.ctx.globalCompositeOperation = "source-over";
         //looping thorugh the points array to draw points
-        for (let i = 0; i < len; i++) {
-            let p = new Path2D();
+        for (var i = 0; i < len; i++) {
+            var p = new Path2D();
             p.arc(this.points[i].x, this.points[i].y, 1, 0, 2 * Math.PI);
             //console.log(this.points[i]);
             this.ctx.fillStyle = "#8e44ad";
             this.ctx.fill(p);
         }
         this.ctx.restore();
-    }
+    };
     //method to draw the quadratic line between the points 
-    joinPoints() {
+    TypingChart.prototype.joinPoints = function () {
         this.ctx.save();
         this.ctx.strokeStyle = "#9b59b6";
         this.ctx.lineWidth = 1;
         this.ctx.globalCompositeOperation = "destination-over";
-        let len = this.points.length;
-        for (let i = 0; i < len - 1; i++) {
+        var len = this.points.length;
+        for (var i = 0; i < len - 1; i++) {
             this.ctx.beginPath();
             this.ctx.moveTo(this.points[i].x, this.points[i].y);
             this.ctx.lineTo(this.points[i + 1].x, this.points[i + 1].y);
@@ -231,15 +236,15 @@ class TypingChart {
             this.ctx.stroke();
         }
         this.ctx.restore();
-    }
+    };
     //method to fill the space
-    fillPoints() {
-        let len = this.points.length;
+    TypingChart.prototype.fillPoints = function () {
+        var len = this.points.length;
         this.ctx.save();
         this.ctx.fillStyle = "#00d8d6";
         this.ctx.globalAlpha = 1;
         this.ctx.lineWidth = 0;
-        for (let i = 0; i < len - 1; i++) {
+        for (var i = 0; i < len - 1; i++) {
             this.ctx.globalCompositeOperation = "destination-over";
             this.ctx.beginPath();
             this.ctx.moveTo(this.points[i].x, this.points[i].y);
@@ -250,17 +255,17 @@ class TypingChart {
             this.ctx.fill();
         }
         this.ctx.restore();
-    }
+    };
     //draw points in the canvas for error
-    drawErrorPoints() {
-        const len = this.errorPoints.length;
+    TypingChart.prototype.drawErrorPoints = function () {
+        var len = this.errorPoints.length;
         //fill the space of the error points
         this.ctx.save();
         this.ctx.fillStyle = "#353b48";
         this.ctx.globalAlpha = 0.7;
         this.ctx.lineWidth = 0;
         this.ctx.globalCompositeOperation = "source-over";
-        for (let i = 0; i < len - 1; i++) {
+        for (var i = 0; i < len - 1; i++) {
             this.ctx.beginPath();
             this.ctx.moveTo(this.errorPoints[i].x, this.errorPoints[i].y);
             this.ctx.lineTo(this.errorPoints[i + 1].x, this.errorPoints[i + 1].y);
@@ -275,7 +280,7 @@ class TypingChart {
         this.ctx.strokeStyle = "#4834d4";
         this.ctx.lineWidth = 1;
         this.ctx.globalCompositeOperation = "source-over";
-        for (let i = 0; i < len - 1; i++) {
+        for (var i = 0; i < len - 1; i++) {
             this.ctx.beginPath();
             this.ctx.moveTo(this.errorPoints[i].x, this.errorPoints[i].y);
             this.ctx.lineTo(this.errorPoints[i + 1].x, this.errorPoints[i + 1].y);
@@ -283,9 +288,9 @@ class TypingChart {
             this.ctx.stroke();
         }
         this.ctx.restore();
-    }
+    };
     //public method to render the canvas element
-    startRender() {
+    TypingChart.prototype.startRender = function () {
         //clearing the canvas before drawing new objects
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.createAxis();
@@ -298,17 +303,18 @@ class TypingChart {
         this.joinPoints();
         this.fillPoints();
         this.animationId = window.requestAnimationFrame(this.startRender.bind(this));
-    }
+    };
     //public method to stop the render the canvas element
-    stopRender() {
+    TypingChart.prototype.stopRender = function () {
         //cancel the animation 
         window.cancelAnimationFrame(this.animationId);
         console.log("animation cancelled");
-    }
-    resetCanvas() {
+    };
+    TypingChart.prototype.resetCanvas = function () {
         this.wpmData = [];
         this.points = [];
         this.errorPoints = [];
         this.drawDefault();
-    }
-}
+    };
+    return TypingChart;
+}());

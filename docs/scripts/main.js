@@ -1,13 +1,14 @@
-const typingBox = document.getElementById("typing-box");
-const playButton = document.getElementById("play_button");
-const playerIdElem = document.getElementById("playerId");
-const timeUpBanner = document.querySelector(".timeUpWrapper");
-const popupWrapper = document.getElementById("popUpWrapper");
-let clock = new Clock("countDown");
+var _this = this;
+var typingBox = document.getElementById("typing-box");
+var playButton = document.getElementById("play_button");
+var playerIdElem = document.getElementById("playerId");
+var timeUpBanner = document.querySelector(".timeUpWrapper");
+var popupWrapper = document.getElementById("popUpWrapper");
+var clock = new Clock("countDown");
 //console.log(new TypingBox().words);
 //function to create a 8-digit random player Id when the page loads
 function loadPlayerId() {
-    let id = Math.floor(Math.random() * 10000000);
+    var id = Math.floor(Math.random() * 10000000);
     return id;
 }
 function getPlayerId() {
@@ -16,7 +17,7 @@ function getPlayerId() {
         return Number(localStorage.getItem("typingPlayerId"));
     }
     else {
-        let id = loadPlayerId();
+        var id = loadPlayerId();
         localStorage.setItem("typingPlayerId", id.toString());
         return id;
     }
@@ -28,7 +29,7 @@ function getPlayerName() {
     }
     return "";
 }
-const playerId = getPlayerId();
+var playerId = getPlayerId();
 playerIdElem.textContent = playerId.toString();
 document.getElementById("playerName").textContent = getPlayerName();
 //available time periods for the game
@@ -44,22 +45,22 @@ var Status;
     Status["start"] = "START";
     Status["reset"] = "RESET";
 })(Status || (Status = {}));
-let runningStatus = Status.start;
+var runningStatus = Status.start;
 //console.log(runningStatus);
-let currentTime = TimePeriods.One;
-let chart = new TypingChart();
+var currentTime = TimePeriods.One;
+var chart = new TypingChart();
 //Initialize the typing paragraph for the test
 function InitializeText() {
-    const len = wordArray.length;
-    for (let i = 0; i < len; i++) {
+    var len = wordArray.length;
+    for (var i = 0; i < len; i++) {
         //creating a div element to hold the letters
-        const wrapper = document.createElement("div");
-        wrapper.setAttribute("id", `${i}`);
-        for (let j = 0; j < wordArray[i].length; j++) {
-            const letter = document.createElement("span");
+        var wrapper = document.createElement("div");
+        wrapper.setAttribute("id", "" + i);
+        for (var j = 0; j < wordArray[i].length; j++) {
+            var letter = document.createElement("span");
             //setting attributes of the custom elements
             letter.setAttribute("class", "");
-            letter.textContent += `${wordArray[i][j]}`;
+            letter.textContent += "" + wordArray[i][j];
             //appending the element in the wrapper element
             wrapper.appendChild(letter);
         }
@@ -70,8 +71,8 @@ function InitializeText() {
 InitializeText();
 //function to reset the typingBox
 function resetTypingbox() {
-    let words = typingBox.children;
-    for (let i = words.length - 1; i >= 0; i--) {
+    var words = typingBox.children;
+    for (var i = words.length - 1; i >= 0; i--) {
         words[i].remove();
     }
     //re-initializing the typing box
@@ -79,8 +80,8 @@ function resetTypingbox() {
 }
 //function to the icon and text of the play button
 function changeButton() {
-    const icon = playButton.firstElementChild;
-    const span = playButton.lastElementChild;
+    var icon = playButton.firstElementChild;
+    var span = playButton.lastElementChild;
     if (runningStatus === Status.reset) {
         playButton.style.color = "#e84118";
         icon.setAttribute("class", "fas fa-stop");
@@ -142,11 +143,11 @@ function start_Game(e) {
 }
 //adding the Event listener on the Play button
 playButton.addEventListener("click", start_Game, false);
-const typingInput = document.getElementById("typing_input");
-const outOfFocusBox = document.querySelector(".outOfFocus");
-const typingBoxContainer = document.querySelector(".typing-box-container");
-window.addEventListener("click", (e) => {
-    const path = e.composedPath();
+var typingInput = document.getElementById("typing_input");
+var outOfFocusBox = document.querySelector(".outOfFocus");
+var typingBoxContainer = document.querySelector(".typing-box-container");
+window.addEventListener("click", function (e) {
+    var path = e.composedPath();
     if (path.includes(typingBoxContainer) || path.includes(playButton)) {
         typingInput.focus();
         if (!outOfFocusBox.classList.contains("hidden"))
@@ -157,10 +158,11 @@ window.addEventListener("click", (e) => {
             outOfFocusBox.classList.remove("hidden");
     }
 }, false);
-const chartWrapper = document.querySelector(".chart");
+var chartWrapper = document.querySelector(".chart");
 //creating a resize observer to observe the canvas element wrapper
-const resizeObserver = new ResizeObserver(entries => {
-    for (let entry of entries) {
+var resizeObserver = new ResizeObserver(function (entries) {
+    for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
+        var entry = entries_1[_i];
         if (entry.contentBoxSize && entry.target === chartWrapper) {
             chart.updateDimensions();
         }
@@ -175,8 +177,8 @@ var activeButton;
 })(activeButton || (activeButton = {}));
 ;
 //set the active status of the button
-let activeStatus = activeButton.chart;
-const chartsButton = document.getElementById("chartsButton"), settingsButton = document.getElementById("settingsButton");
+var activeStatus = activeButton.chart;
+var chartsButton = document.getElementById("chartsButton"), settingsButton = document.getElementById("settingsButton");
 //function to toggle between the chart and the settings
 function changeButtonStyle(e) {
     if (this == chartsButton) {
@@ -204,11 +206,11 @@ function changeButtonStyle(e) {
 }
 chartsButton.addEventListener("click", changeButtonStyle.bind(chartsButton), false);
 settingsButton.addEventListener("click", changeButtonStyle.bind(settingsButton), false);
-let playerInput = document.getElementById("setPlayerName");
+var playerInput = document.getElementById("setPlayerName");
 playerInput.value = getPlayerName();
 //change the player Name when the input element is focused
-playerInput.addEventListener("focus", (e) => {
-    this.focus();
+playerInput.addEventListener("focus", function (e) {
+    _this.focus();
     e.target.setSelectionRange(0, e.target.value.length);
 }, false);
 //set the player name when the input element is blured
@@ -226,9 +228,9 @@ playerInput.addEventListener("blur", function (e) {
  *
  */
 function changeTimeButtonStyle(e) {
-    let target = e.target;
-    let child = document.querySelector(".buttonsWrapper").children;
-    for (let i = 0; i < child.length; i++) {
+    var target = e.target;
+    var child = document.querySelector(".buttonsWrapper").children;
+    for (var i = 0; i < child.length; i++) {
         if (child[i].classList.contains("active"))
             child[i].classList.remove("active");
     }
